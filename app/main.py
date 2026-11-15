@@ -1,8 +1,8 @@
- """FastAPI application entry point.  Run with:  uvicorn app.main:app --reload"""
+"""FastAPI application entry point.  Run with:  uvicorn app.main:app --reload"""
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
-from app.error import DomainError
+from app.errors import DomainError
 from app.routers import billing, customers, plans, subscriptions
 
 app = FastAPI(
