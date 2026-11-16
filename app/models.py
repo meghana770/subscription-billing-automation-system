@@ -236,3 +236,19 @@ class AuditLog(Base):
     new_value: Mapped[Optional[dict]] = mapped_column(JSON_TYPE, nullable=True)
     actor: Mapped[str] = mapped_column(String(100), nullable=False, default="system")
     created_at: Mapped[datetime] = mapped_column(UTCDateTime, nullable=False, default=utcnow, index=True)
+
+class User(Base):
+    __tablename__ = "users"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(String(150), nullable=False)
+    email: Mapped[str] = mapped_column(String(255), unique=True, nullable=False, index=True)
+    hashed_password: Mapped[str] = mapped_column(String(255), nullable=False)
+    is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+
+    created_at: Mapped[datetime] = mapped_column(
+        UTCDateTime, nullable=False, default=utcnow
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        UTCDateTime, nullable=False, default=utcnow, onupdate=utcnow
+    )

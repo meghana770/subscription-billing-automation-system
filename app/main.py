@@ -5,6 +5,8 @@ from fastapi.responses import JSONResponse
 from app.errors import DomainError
 from app.routers import billing, customers, plans, subscriptions
 
+from app.auth.router import router as auth_router 
+
 app = FastAPI(
     title="Subscription Billing Automation System",
     version="1.0.0-milestone1",
@@ -24,6 +26,16 @@ app.include_router(plans.router)
 app.include_router(customers.router)
 app.include_router(subscriptions.router)
 app.include_router(billing.router)
+app.include_router(auth_router)
+
+from fastapi.middleware.cors import CORSMiddleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/", tags=["System"])
